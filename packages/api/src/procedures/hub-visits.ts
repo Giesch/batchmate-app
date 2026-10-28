@@ -4,6 +4,7 @@ import { recurseProfile } from "@batchmate/db/schema"
 import { ORPCError } from "@orpc/server"
 import { and, eq, inArray, sql } from "drizzle-orm"
 import { type Context, server } from "../context"
+import { todayInNY } from "../lib/date"
 import { getRoleFromCachedStint, getRoleFromStints } from "../lib/role"
 
 const PROFILE_CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000
@@ -19,20 +20,6 @@ function hourInNYT(iso: string | null | undefined): number | null {
 			hour12: false,
 		}).format(d),
 	)
-}
-
-/**
- * Current calendar date as `YYYY-MM-DD` in RC's timezone (America/New_York).
- * Hub visits are keyed by NYT date, so "today" must be computed there — a UTC
- * date would be a day off for the late-evening NYT hours.
- */
-function todayInNYT(): string {
-	return new Intl.DateTimeFormat("en-CA", {
-		timeZone: "America/New_York",
-		year: "numeric",
-		month: "2-digit",
-		day: "2-digit",
-	}).format(new Date())
 }
 
 /**
@@ -240,7 +227,7 @@ export const isCheckedIn = server.isCheckedIn.handler(async ({ context }) => {
 		return { isCheckedIn: false }
 	}
 
-	const date = todayInNYT()
+	const date = todayInNY()
 	const {
 		data: visit,
 		error,
