@@ -4,8 +4,7 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"dev": "wrangler dev",
-		"dev:local": "wrangler dev --env local"
+		"dev": "wrangler dev"
 	},
 	"dependencies": {
 		"@orpc/openapi": "^1.0.0",
