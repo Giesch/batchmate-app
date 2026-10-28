@@ -214,9 +214,9 @@ export default function HubScreen() {
 			</View>
 
 			{checkInStatusIsLoading && (
-				<View className="min-h-12 flex-row py-3 items-center justify-center gap-2 rounded-xl bg-cyan opacity-50">
-					<MapPin size={18} color="#0A0F1C" />
-					<Text className="text-[15px] font-semibold text-background">
+				<View className="min-h-12 flex-row py-3 items-center justify-center gap-2 rounded-xl bg-primary opacity-50">
+					<MapPin size={18} color={c.primaryForeground} />
+					<Text className="text-[15px] font-semibold text-primary-foreground">
 						Loading check-in status...
 					</Text>
 				</View>
@@ -224,7 +224,7 @@ export default function HubScreen() {
 
 			{checkInStatusError && (
 				<View className="min-h-12 flex-row py-3 items-center justify-center gap-2 rounded-xl border border-destructive/40 opacity-60">
-					<MapPin size={18} color="#ef4444" />
+					<MapPin size={18} color={c.danger} />
 					<Text className="text-[15px] font-semibold text-destructive">
 						Failed to load check-in status.
 					</Text>

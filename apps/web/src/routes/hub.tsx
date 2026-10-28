@@ -234,7 +234,7 @@ function HubPage() {
 				<button
 					type="button"
 					disabled
-					className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-cyan text-background disabled:opacity-50"
+					className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary text-primary-foreground disabled:opacity-50"
 				>
 					<MapPin size={18} />
 					<span className="text-[15px] font-semibold">
