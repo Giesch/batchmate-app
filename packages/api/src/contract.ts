@@ -29,7 +29,6 @@ const HubVisitorSchema = z.object({
 })
 
 const HubResponseSchema = z.object({
-	isCheckedIn: z.boolean(),
 	visitors: z.array(HubVisitorSchema),
 })
 

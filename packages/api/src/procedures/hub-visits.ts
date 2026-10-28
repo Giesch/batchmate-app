@@ -85,13 +85,9 @@ async function getRcPersonId(
 	return rcAccount ? Number(rcAccount.accountId) : null
 }
 
-/**
- * fetches the current user's check-in status,
- * and all checked-in users' profiles
- */
+/** fetches all checked-in users' profiles */
 export const hubVisits = server.hubVisits.handler(async ({ context }) => {
-	const { user, recurseApi } = requireRecurseUser(context)
-	const rcId = await getRcPersonId(context.db, user.id)
+	const { recurseApi } = requireRecurseUser(context)
 
 	const { data, error } = await recurseApi.GET("/hub_visits")
 
@@ -99,17 +95,6 @@ export const hubVisits = server.hubVisits.handler(async ({ context }) => {
 		throw new ORPCError("INTERNAL_SERVER_ERROR", {
 			message: "Failed to fetch hub visits",
 		})
-	}
-
-	let isCheckedIn = false
-	if (rcId) {
-		const myVisits = data.filter((v) => v.person.id === rcId)
-		if (myVisits.length > 0) {
-			const latest = myVisits.reduce((a, b) =>
-				(a.created_at ?? "") > (b.created_at ?? "") ? a : b,
-			)
-			isCheckedIn = isCheckInActive(latest.created_at)
-		}
 	}
 
 	const uniqueIds = [...new Set(data.map((v) => v.person.id))]
@@ -224,7 +209,6 @@ export const hubVisits = server.hubVisits.handler(async ({ context }) => {
 	}
 
 	return {
-		isCheckedIn,
 		visitors: Array.from(latestByPerson.values()).map((visit) => {
 			const profile = profiles.get(visit.person.id)
 			return {
