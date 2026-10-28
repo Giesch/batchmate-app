@@ -1,4 +1,4 @@
-import { groupPeopleByBatch, Text } from "@batchmate/ui"
+import { groupPeopleByBatch, Text, useThemeColors } from "@batchmate/ui"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "expo-router"
 import {
@@ -53,6 +53,7 @@ function lastName(name: string) {
 }
 
 function OvernightBadge() {
+	const c = useThemeColors()
 	return (
 		<Pressable
 			onPress={() =>
@@ -64,13 +65,14 @@ function OvernightBadge() {
 			className="flex-row items-center gap-1 rounded-full bg-indigo-500/10 px-2 py-0.5"
 			hitSlop={6}
 		>
-			<Moon size={11} color="#A5B4FC" />
-			<Text className="text-[11px] font-medium text-indigo-300">Overnight</Text>
+			<Moon size={11} color={c.moon} />
+			<Text className="text-[11px] font-medium text-moon">Overnight</Text>
 		</Pressable>
 	)
 }
 
 export default function HubScreen() {
+	const c = useThemeColors()
 	const router = useRouter()
 	const queryClient = useQueryClient()
 
@@ -231,12 +233,12 @@ export default function HubScreen() {
 
 			{checkInStatus && !isCheckedIn && (
 				<Pressable
-					className="min-h-12 flex-row py-3 items-center justify-center gap-2 rounded-xl bg-cyan"
+					className="min-h-12 flex-row py-3 items-center justify-center gap-2 rounded-xl bg-primary"
 					onPress={() => checkin.mutate({})}
 					disabled={checkin.isPending}
 				>
-					<MapPin size={18} color="#0A0F1C" />
-					<Text className="text-[15px] font-semibold text-background">
+					<MapPin size={18} color={c.primaryForeground} />
+					<Text className="text-[15px] font-semibold text-primary-foreground">
 						{checkin.isPending ? "Checking in..." : "Check in to the Hub"}
 					</Text>
 				</Pressable>
@@ -244,7 +246,7 @@ export default function HubScreen() {
 
 			{checkInStatus && isCheckedIn && (
 				<View className="min-h-12 flex-row py-3 items-center justify-center gap-2 rounded-xl border border-cyan/20 bg-cyan/10">
-					<CheckCircle size={18} color="#22D3EE" />
+					<CheckCircle size={18} color={c.primary} />
 					<Text className="text-sm font-medium text-primary">
 						You're checked in
 					</Text>
@@ -267,7 +269,7 @@ export default function HubScreen() {
 
 			{visitors && visitors.length === 0 && (
 				<View className="flex-1 items-center justify-center gap-3 py-20">
-					<Users size={48} color="#475569" />
+					<Users size={48} color={c.textMuted} />
 					<Text className="text-sm text-text-tertiary">
 						Nobody is in the hub right now
 					</Text>
@@ -309,7 +311,7 @@ export default function HubScreen() {
 					)}
 					{mainList.length === 0 ? (
 						<View className="flex-1 items-center justify-center gap-3 py-20">
-							<Moon size={48} color="#475569" />
+							<Moon size={48} color={c.textMuted} />
 							<Text className="text-sm text-text-tertiary">
 								Only overnight check-ins so far
 							</Text>
