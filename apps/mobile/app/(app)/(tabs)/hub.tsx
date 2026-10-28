@@ -212,7 +212,7 @@ export default function HubScreen() {
 			</View>
 
 			{checkInStatusIsLoading && (
-				<View className="h-12 flex-row items-center justify-center gap-2 rounded-xl bg-cyan opacity-50">
+				<View className="min-h-12 flex-row py-3 items-center justify-center gap-2 rounded-xl bg-cyan opacity-50">
 					<MapPin size={18} color="#0A0F1C" />
 					<Text className="text-[15px] font-semibold text-background">
 						Loading check-in status...
@@ -221,7 +221,7 @@ export default function HubScreen() {
 			)}
 
 			{checkInStatusError && (
-				<View className="h-12 flex-row items-center justify-center gap-2 rounded-xl border border-destructive/40 opacity-60">
+				<View className="min-h-12 flex-row py-3 items-center justify-center gap-2 rounded-xl border border-destructive/40 opacity-60">
 					<MapPin size={18} color="#ef4444" />
 					<Text className="text-[15px] font-semibold text-destructive">
 						Failed to load check-in status.
@@ -231,7 +231,7 @@ export default function HubScreen() {
 
 			{checkInStatus && !isCheckedIn && (
 				<Pressable
-					className="h-12 flex-row items-center justify-center gap-2 rounded-xl bg-cyan"
+					className="min-h-12 flex-row py-3 items-center justify-center gap-2 rounded-xl bg-cyan"
 					onPress={() => checkin.mutate({})}
 					disabled={checkin.isPending}
 				>
@@ -243,7 +243,7 @@ export default function HubScreen() {
 			)}
 
 			{checkInStatus && isCheckedIn && (
-				<View className="h-12 flex-row items-center justify-center gap-2 rounded-xl border border-cyan/20 bg-cyan/10">
+				<View className="min-h-12 flex-row py-3 items-center justify-center gap-2 rounded-xl border border-cyan/20 bg-cyan/10">
 					<CheckCircle size={18} color="#22D3EE" />
 					<Text className="text-sm font-medium text-primary">
 						You're checked in
