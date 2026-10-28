@@ -235,8 +235,9 @@ export const hubVisits = server.hubVisits.handler(async ({ context }) => {
 export const isCheckedIn = server.isCheckedIn.handler(async ({ context }) => {
 	const { user, recurseApi } = requireRecurseUser(context)
 	const person_id = await getRcPersonId(context.db, user.id)
+	// No linked RC account means there's no visit to look up.
 	if (person_id === null) {
-		throw new ORPCError("UNAUTHORIZED")
+		return { isCheckedIn: false }
 	}
 
 	const date = todayInNYT()
